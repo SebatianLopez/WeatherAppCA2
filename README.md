@@ -1,3 +1,7 @@
+## cct students 
+Yerick Sebastian Jimenez Pereira 2023297
+Dolgion Usukh-Ochir 2023175 
+
 # WeatherAppCA2
 Functional code for the WeatherApp
 WeatherApp 
