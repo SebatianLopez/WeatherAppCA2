@@ -2,150 +2,138 @@
 Yerick Sebastian Jimenez Pereira 2023289
 Dolgion Usukh-Ochir 2023175 
 
-# WeatherAppCA2
-Functional code for the WeatherApp
-WeatherApp 
+# 🌦️WeatherAppCA2
+A sleek, modern Weather App built with React Native + Expo.
+It fetches real-time weather and 5-day forecasts using WeatherAPI — complete with dark mode, smooth animations, and local caching!
 
-A sleek, modern weather app built with React Native + Expo. It fetches real-time weather and 5-day forecasts using the WeatherAPI service. Featuring dark mode, animations, and even local caching. 
+# ✨Features 
 
-# Features 
+✅ Search weather by city
+🌍 Auto-detect user location (with permission)
+🌡️ Toggle °C / °F
+🌙 Theme switcher (Dark / Light)
+📅 5-day forecast with icons & temps
+💨 Wind & 💧Humidity display
+🧠 Simple data caching for faster reloads
+🔍 Recent searches history (with clear button)
+💫 Smooth card animations
 
-Search weather by city 
+# 🧰Tech Stack 
 
-Curent weather  
+⚛️ React Native (Expo)
 
-5-day forecast with icons and temps 
+🟦 TypeScript
 
-Auto-detect user location (with permission) 
+☁️ WeatherAPI.com for weather data
 
-Theme toggle (Dark/Light) 
+🎞️ react-native-animatable for transitions
 
-°C / °F temperature switcher 
-
-Smooth card animations 
-
-Recent searches history with clear button 
-
-Display wind and humidity 
-
-Simple data caching 
-
-# Tech Stack 
-
-React Native (Expo) 
-
-TypeScript 
-
-WeatherAPI.com for weather data 
-
-react-native-animatable for transitions 
-
-AsyncStorage for caching + history 
+💾 AsyncStorage for caching & history
 
  
 
-# Setup Instructions 
+# ⚙️Setup Instructions 
 
-Clone the repo 
+## 1. Clone the repo 
 
 git clone https://github.com/SebatianLopez/WeatherAppCA2  
 cd weather-app 
 
-Install dependencies 
+## 2. Install dependencies 
 
 npm install 
 
-##Add your API key 
+## 3. Add your API key 🔑
 
 const API_KEY = ' '; 
 
-##Run it 
+## Run the app 🚀 
 
 npx expo start 
 
  
 
-# Technical Report 
+# Design & Layout Choices
 
-Design & Layout Choices 
+We aimed for a mobile-first, clean UI — the main weather card is centered with a large temperature font and minimalist icons 🌤️.
+Pastel gradients and dark mode make it friendly, modern, and accessible.
 
-We wanted a mobile-first, clean UI. The main weather card is centered with large font for the temperature and minimalist icons. Pastel gradients give a soft, friendly vibe. 
+Toggles (theme + °C/°F) are placed within easy thumb reach for better usability
 
-Dark mode adds accessibility and matches user preferences. We placed toggles (theme/°C-°F) within easy thumb reach. 
+## 🧩 Component Overview
 
-# Component Structure & Docs 
+## 🌤️ WeatherCard.tsx
 
-## WeatherCard.tsx 
+Displays current weather data:
 
-Displays current weather data: 
+City name, date & time
 
-City name 
+Temperature (°C/°F toggle)
 
-Date & time 
+Condition icon + text
 
-Temperature (toggleable ℃/℉) 
+Wind + humidity
 
-Weather icon + condition 
+Theme + unit toggles
 
-Humidity & wind 
+## 📆 ForecastItem.tsx
 
-Theme + temperature toggles 
+Each card shows:
 
-## ForecastItem.tsx 
+Day name (e.g., “Tuesday”)
 
-Renders a single day in the forecast list: 
+High / low temperature
 
-Day name (e.g. "Tuesday") 
+Icon + weather condition
 
-High/low temp 
+## 🔎 SearchBar.tsx
 
-Icon + condition text 
+Handles city input and interactions:
 
-## SearchBar.tsx 
+Input validation
 
-Handles city input and submission: 
+Search button (calls parent handler)
 
-Text input with validation 
+Search history (tappable)
 
-Search button (calls parent handler) 
+“Use My Location” option 
 
-Tappable search history 
+## 🌗 ThemeContext.tsx
 
-"Use My Location" button (optional) 
+Manages app theme with React Context API:
 
-## ThemeContext.tsx 
+useTheme() hook to access / toggle mode
 
-Simple React Context to manage light/dark mode: 
+ThemeProvider wraps the app globally
 
-useTheme() hook to access and toggle theme 
+## 📱 ForecastScreen.tsx
 
-ThemeProvider wraps app root for global access 
+Fetches 5-day forecast from API
 
-ForecastScreen.tsx 
+Uses FlatList to render daily forecasts
 
-Uses useLocalSearchParams() to get city 
+Supports city lookup via route parameters
 
-Fetches 5-day forecast via API 
+## 🏠 HomeScreen.tsx
 
-Displays forecast with FlatList + ForecastItem 
+Loads cached weather data on startup
 
-## HomeScreen.tsx 
+Fetches geolocation-based weather
 
-Loads cached weather from AsyncStorage 
+Displays current weather via WeatherCard
 
-Auto-fetches geolocation weather 
+Includes recent search history
 
-Manual search bar with search history 
+## ☁️ weatherApi.ts
 
-Shows current weather via WeatherCard 
+Handles all API logic (via Axios):
 
-## weatherApi.ts 
+getWeatherByCity(city)
 
-Defines all API integration logic 
+getWeatherByCoords(lat, lon)
 
-Uses axios to fetch data from WeatherAPI endpoints 
-
-Catches errors (rate limit, invalid key, etc.) 
+getForecastByCity(city)
+Includes error handling for rate limits & invalid keys 🧩
 
 ## Exports: 
 
@@ -157,47 +145,51 @@ getForecastByCity(city: string)
 
  
 
-# API & Data Handling 
+# 🔄 API & Data Handling
 
-# API Integration 
+# Endpoints used (WeatherAPI):
 
-Powered by WeatherAPI: 
+/current.json?q=city → Current weather
 
-Current Weather: /current.json?q=city 
+/forecast.json?q=city&days=5 → 5-day forecast
 
-Forecast: /forecast.json?q=city&days=5 
-
-Geo coords: /forecast.json?q=lat,lon&days=5 
+/forecast.json?q=lat,lon&days=5 → Location-based
 
  
 
-# State Management 
+# 🧠 State Management
 
-useState() for weather, loading, errors, unit toggles 
+useState() for data, loading, and toggles
 
-useEffect() for geolocation on startup 
+useEffect() for auto-fetch on app start
 
-Search history saved in AsyncStorage 
+AsyncStorage for search history & cache
 
-Theme managed via ThemeContext (React Context API) 
+Theme handled with ThemeContext
 
-# Caching Strategy 
+# 💾 Caching Strategy
 
-Saves last successful weather response in AsyncStorage 
+Stores the last successful weather response locally
 
-On app open: loads cached weather before fresh request 
+Loads cached data before fetching new info
 
- 
-
-# Rate Limit Handling 
-
-Catches 429 error from API and shows friendly alert 
-
-Limits frequent re-requests via caching + debounced search 
+Reduces API calls & improves load speed 🚀 
 
  
 
-# Code Comments & Structure 
+# 🚨 Rate Limit Handling
+
+Detects API 429 (Too Many Requests)
+
+Displays user-friendly alerts instead of breaking 
+
+Uses caching + debounced search to avoid spam requests 
+
+ 
+
+## 🧱 Code Quality & Structure
+
+# 🧩 Modular folder structure: 
 
 Major components and functions are documented with inline comments 
 
@@ -205,45 +197,43 @@ Functions are broken into small, readable pieces
 
 Project uses clear naming conventions and a modular folder structure: 
 
-/components 
-  WeatherCard.tsx 
-  ForecastItem.tsx 
-  SearchBar.tsx 
-/hooks 
-  useColorScheme.ts 
-/context 
-  ThemeContext.tsx 
-/services 
-  weatherApi.ts 
-/constants 
-  Colors.ts 
+/components
+  WeatherCard.tsx
+  ForecastItem.tsx
+  SearchBar.tsx
+/hooks
+  useColorScheme.ts
+/context
+  ThemeContext.tsx
+/services
+  weatherApi.ts
+/constants
+  Colors.ts
 
-State and props are clearly typed with TypeScript 
+Well-commented & typed with TypeScript
 
-Animations are commented for clarity (e.g. fadeInUp on weather card) 
+Consistent naming & modular functions
 
- 
-
-# Future Improvements 
-
-Hourly forecast 
-
-Saved favorite cities 
-
-Weather map or radar view 
-
-Custom animation per weather condition 
-
-Multi-language support 
+Readable, maintainable, and beginner-friendly  
 
  
 
-# Credits 
+# 🌈 Future Improvements
 
-WeatherAPI.com 
+🕐 Hourly forecast
+⭐ Favorite cities
+🗺️ Weather map / radar view
+🌦️ Custom animations per weather condition
+🌍 Multi-language support 
 
-Icons from API 
+ 
 
-Built with using Expo + React Native 
+# Credits
+
+☁️ WeatherAPI.com
+
+🎨 Icons from WeatherAPI
+
+🚀 Built with Expo + React Native
 
  
